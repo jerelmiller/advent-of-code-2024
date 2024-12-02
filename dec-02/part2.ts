@@ -17,14 +17,6 @@ function areLevelsSafe(level1: number, level2: number, isIncreasing: boolean) {
   );
 }
 
-function getIndexOfFirstUnsafeLevel(report: number[]) {
-  return report.findIndex((num, index) =>
-    index === report.length - 1
-      ? false
-      : !areLevelsSafe(num, report[index + 1], isReportIncreasing(report)),
-  );
-}
-
 function isSafeReport(report: number[]) {
   return report.reduce((isSafe, num, index) => {
     if (!isSafe || index === report.length - 1) {
@@ -39,25 +31,7 @@ function isSafeReport(report: number[]) {
 }
 
 function isSafeReportWithProblemDampener(report: number[]) {
-  const index = getIndexOfFirstUnsafeLevel(report);
-
-  if (index < 0) {
-    throw new Error("Operating on safe report");
-  }
-
-  console.log({
-    report,
-    index,
-    dampenFirst: report.toSpliced(index, 1),
-    dampenSecond: report.toSpliced(index + 1, 1),
-    safeFirst: isSafeReport(report.toSpliced(index, 1)),
-    safeSecond: isSafeReport(report.toSpliced(index + 1, 1)),
-  });
-
-  return (
-    isSafeReport(report.toSpliced(index, 1)) ||
-    isSafeReport(report.toSpliced(index + 1, 1))
-  );
+  return report.some((_, index) => isSafeReport(report.toSpliced(index, 1)));
 }
 
 const totalSafeReports = readFileByLine(__dirname, "./input.txt")
