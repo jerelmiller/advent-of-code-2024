@@ -1,7 +1,6 @@
-import { readFile } from "../utils/fs";
+import { readFileByLine } from "../utils/fs";
 
-const [listA, listB] = readFile(__dirname, "./input.txt")
-  .split("\n")
+const [listA, listB] = readFileByLine(__dirname, "./input.txt")
   .reduce<[number[], number[]]>(
     ([listA, listB], line) => {
       const [a, b] = line.split(/\s+/);

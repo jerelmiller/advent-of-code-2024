@@ -8,3 +8,7 @@ export function readFile(dir: string, relativeFilePath: string) {
     })
     .trim();
 }
+
+export function readFileByLine(dir: string, relativeFilePath: string) {
+  return readFile(dir, relativeFilePath).split("\n");
+}
